@@ -80,6 +80,31 @@ for (let i = 0; i < 10; i++) {
     buttonContainer.appendChild(digitButton);
 }
 
+const decimalButton = document.createElement('button');
+decimalButton.setAttribute("class", "digitButton");
+decimalButton.innerText = '.';
+decimalButton.addEventListener("click", () => {
+        if(!operator) {
+            if (num1.includes('.')) {
+                return
+            }
+            num1+='.';
+            numOneSign.innerText = `First Number: ${num1}`;
+            calculatorDisplay.innerText = numOneSign.innerText;
+
+        } else if (operator) {
+            if (num1.includes('.')) {
+                return
+            }
+            num2+='.';
+            numTwoSign.innerText = `Second Number: ${num2}`;
+            calculatorDisplay.innerText = numTwoSign.innerText;}
+        }
+    )
+
+    
+buttonContainer.appendChild(decimalButton)
+
 // Operator Algorithm
 const operatorButtonNodeList = document.querySelectorAll('.operator');
 const operatorButtonArray = [...operatorButtonNodeList]
