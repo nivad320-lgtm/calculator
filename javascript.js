@@ -89,4 +89,12 @@ equalButton.addEventListener("click", () => {
 
 
 // Clear Button
-
+const clearButton = document.querySelector('.clear');
+clearButton.addEventListener("click", () => {
+    num1 = '';
+    numOneSign.innerText = `First Number ${num1}`;
+    num2 = '';
+    numTwoSign.innerText = `Second Number ${num2}`;
+    operator = '';
+    operatorSign.innerText = `Operator : ${operator}`;
+})
