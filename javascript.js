@@ -2,7 +2,7 @@ num1 = ''
 num2 = ''
 operator = ''
 total = ''
-
+let finishedCalculation = false;
 function operate(num1,operator,num2) {
     num1 = Number(num1);
     num2 = Number(num2);
@@ -58,14 +58,9 @@ operatorDisplay.innerText = "\u00A0";
 displayContainer.appendChild(operatorDisplay);
 displayContainer.appendChild(calculatorDisplay);
 
-// Create 10 Buttons for digits
-for (let i = 0; i < 10; i++) {
-    // Build Brick
-    const digitButton = document.createElement('button');
-    digitButton.setAttribute("class", "digitButton");
-    digitButton.innerText = i;
-    digitButton.addEventListener("click", () => {
-        if(!operator) {
+// Function Declaration
+function inputDigit(i) {
+        if(!operator && !finishedCalculation) {
             num1+=i;
             numOneSign.innerText = `First Number: ${num1}`;
             calculatorDisplay.innerText = numOneSign.innerText;
@@ -75,15 +70,9 @@ for (let i = 0; i < 10; i++) {
             numTwoSign.innerText = `Second Number: ${num2}`;
             calculatorDisplay.innerText = numTwoSign.innerText;
         }
-    })
-    
-    buttonContainer.appendChild(digitButton);
 }
 
-const decimalButton = document.createElement('button');
-decimalButton.setAttribute("class", "digitButton");
-decimalButton.innerText = '.';
-decimalButton.addEventListener("click", () => {
+function inputDecimal(){
         if(!operator) {
             if (num1.includes('.')) {
                 return
@@ -100,19 +89,9 @@ decimalButton.addEventListener("click", () => {
             numTwoSign.innerText = `Second Number: ${num2}`;
             calculatorDisplay.innerText = numTwoSign.innerText;}
         }
-    )
 
+function inputOperator(event) {
     
-buttonContainer.appendChild(decimalButton)
-
-// Operator Algorithm
-const operatorButtonNodeList = document.querySelectorAll('.operator');
-const operatorButtonArray = [...operatorButtonNodeList]
-
-// console.log(operatorButtonArray);
-// Changes the value of the operator
-for (const operatorButton of operatorButtonArray) {
-    operatorButton.addEventListener("click", (event) => {
         if (!num1){
             return
         }
@@ -130,11 +109,9 @@ for (const operatorButton of operatorButtonArray) {
         operatorSign.innerText = `Operator: ${operator}`;
         operatorDisplay.innerText = operatorSign.innerText;
         
-    }); 
-}
+    }
 
-const equalButton = document.querySelector('.equal');
-equalButton.addEventListener("click", () => {
+function inputEqual() {
     if (!num1||!num2) {
         return 
     }
@@ -147,12 +124,12 @@ equalButton.addEventListener("click", () => {
     numTwoSign.innerText = `Second Number: ${num2}`;
     operator = '';
     operatorSign.innerText = `Operator: ${operator}`;
-});
+    operatorDisplay.innerText = operatorSign.innerText; 
+    finishedCalculation = true;
+    
+}
 
-
-// Clear Button
-const clearButton = document.querySelector('.clear');
-clearButton.addEventListener("click", () => {
+function inputClear() {
     num1 = '';
     numOneSign.innerText = `First Number: ${num1}`;
     num2 = '';
@@ -162,11 +139,11 @@ clearButton.addEventListener("click", () => {
     total = ``;
     totalSign.innerText = `Total: ${operator}`;
     calculatorDisplay.innerText = `0`;
-})
+    finishedCalculation = false;
 
-//Backspace Button
-const backspaceButton = document.querySelector('.backspace');
-backspaceButton.addEventListener("click", () =>{
+}
+
+function inputBackspace() {
     if(num1 && !operator) {
         console.log("backspace num1");
         num1 = num1.slice(0,num1.length-1);
@@ -180,13 +157,66 @@ backspaceButton.addEventListener("click", () =>{
     } else {
         console.log("nothing to backspace!");
     }
+}
+
+// Create 10 Buttons for digits
+for (let i = 0; i < 10; i++) {
+    // Build Brick
+    const digitButton = document.createElement('button');
+    digitButton.setAttribute("class", "digitButton");
+    digitButton.innerText = i;
+    digitButton.addEventListener("click", () => inputDigit(i))
+    
+    buttonContainer.appendChild(digitButton);
+}
+
+const decimalButton = document.createElement('button');
+decimalButton.setAttribute("class", "digitButton");
+decimalButton.innerText = '.';
+decimalButton.addEventListener("click", () => {
+        inputDecimal()
+        }
+    )
+
+    
+buttonContainer.appendChild(decimalButton)
+
+// Operator Algorithm
+const operatorButtonNodeList = document.querySelectorAll('.operator');
+const operatorButtonArray = [...operatorButtonNodeList]
+
+// console.log(operatorButtonArray);
+// Changes the value of the operator
+for (const operatorButton of operatorButtonArray) {
+    operatorButton.addEventListener("click", (event) => {
+        inputOperator(event)
+        
+    }); 
+}
+
+const equalButton = document.querySelector('.equal');
+equalButton.addEventListener("click", () => {
+    inputEqual()
+});
+
+
+// Clear Button
+const clearButton = document.querySelector('.clear');
+clearButton.addEventListener("click", () => {
+    inputClear();
+})
+
+//Backspace Button
+const backspaceButton = document.querySelector('.backspace');
+backspaceButton.addEventListener("click", () =>{
+    inputBackspace();
 })
 
 const digits = '1234567890';
 const operatorCharacter = '*/+-';
 //Keyboard Support
 window.onkeydown = ((e) => {
-    if(!operator && digits.includes(e.key)) {
+    if(!operator && digits.includes(e.key) && !finishedCalculation) {
         num1+=e.key;
         numOneSign.innerText = `First Number: ${num1}`;
         calculatorDisplay.innerText = numOneSign.innerText;
@@ -227,6 +257,7 @@ window.onkeydown = ((e) => {
         numTwoSign.innerText = `Second Number: ${num2}`;
         operator = '';
         operatorSign.innerText = `Operator: ${operator}`;
+        finishedCalculation = true;
     }
     else if (e.key === 'Escape') {
     num1 = '';
@@ -239,6 +270,7 @@ window.onkeydown = ((e) => {
     totalSign.innerText = `Total: ${operator}`;
     calculatorDisplay.innerText = `0`;
     operatorDisplay.innerText = '\u00A0';
+    finishedCalculation = false;
     }
     else if (e.key === 'Backspace') {
 
