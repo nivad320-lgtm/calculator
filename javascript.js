@@ -22,9 +22,11 @@ function operate(num1,operator,num2) {
     }
 }
 const buttonContainer = document.querySelector('.buttonContainer');
-const operatorContainer = document.querySelector('operatorContainer') 
+const operatorContainer = document.querySelector('.operatorContainer') 
+const displayContainer = document.querySelector('.display')
 
-// Display Current Values (Prototyping)
+
+// Show Current Values (Prototyping)
 const currentValueContainer = document.querySelector('.currentValueContainer')
 const numOneSign = document.createElement('p');
 numOneSign.innerText = `First Number: ${num1}`;
@@ -42,6 +44,12 @@ currentValueContainer.appendChild(operatorSign);
 currentValueContainer.appendChild(numTwoSign);
 currentValueContainer.appendChild(totalSign);
 
+// Calculator Display
+const calculatorDisplay = document.createElement('p');
+calculatorDisplay.innerText = `0`;
+
+displayContainer.appendChild(calculatorDisplay);
+
 
 // Create 10 Buttons for digits
 for (let i = 0; i < 10; i++) {
@@ -52,10 +60,13 @@ for (let i = 0; i < 10; i++) {
     digitButton.addEventListener("click", () => {
         if(!operator) {
             num1+=i;
-            numOneSign.innerText = `First Number ${num1}`;
+            numOneSign.innerText = `First Number: ${num1}`;
+            calculatorDisplay.innerText = numOneSign.innerText;
+
         } else if (operator) {
             num2+=i;
-            numTwoSign.innerText = `Second Number ${num2}`;
+            numTwoSign.innerText = `Second Number: ${num2}`;
+            calculatorDisplay.innerText = numTwoSign.innerText;
         }
     })
     
@@ -71,7 +82,8 @@ const operatorButtonArray = [...operatorButtonNodeList]
 for (const operatorButton of operatorButtonArray) {
     operatorButton.addEventListener("click", (event) => {
         operator = event.target.innerText;
-        operatorSign.innerText = `Operator : ${operator}`;
+        operatorSign.innerText = `Operator: ${operator}`;
+        calculatorDisplay.innerText = operatorSign.innerText;
     }); 
 }
 
@@ -79,12 +91,13 @@ const equalButton = document.querySelector('.equal');
 equalButton.addEventListener("click", () => {
     total = operate(num1, operator, num2);
     totalSign.innerText = `Total: ${total}`
+    calculatorDisplay.innerText = totalSign.innerText;
     num1 = '';
-    numOneSign.innerText = `First Number ${num1}`;
+    numOneSign.innerText = `First Number: ${num1}`;
     num2 = '';
-    numTwoSign.innerText = `Second Number ${num2}`;
+    numTwoSign.innerText = `Second Number: ${num2}`;
     operator = '';
-    operatorSign.innerText = `Operator : ${operator}`;
+    operatorSign.innerText = `Operator: ${operator}`;
 });
 
 
@@ -92,9 +105,12 @@ equalButton.addEventListener("click", () => {
 const clearButton = document.querySelector('.clear');
 clearButton.addEventListener("click", () => {
     num1 = '';
-    numOneSign.innerText = `First Number ${num1}`;
+    numOneSign.innerText = `First Number: ${num1}`;
     num2 = '';
-    numTwoSign.innerText = `Second Number ${num2}`;
+    numTwoSign.innerText = `Second Number: ${num2}`;
     operator = '';
-    operatorSign.innerText = `Operator : ${operator}`;
+    operatorSign.innerText = `Operator: ${operator}`;
+    total = ``;
+    totalSign.innerText = `Total: ${operator}`;
+    calculatorDisplay.innerText = `0`;
 })
