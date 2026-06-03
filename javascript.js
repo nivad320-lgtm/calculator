@@ -141,8 +141,8 @@ equalButton.addEventListener("click", () => {
     total = operate(num1, operator, num2);
     totalSign.innerText = `Total: ${total}`
     calculatorDisplay.innerText = totalSign.innerText;
-    num1 = '';
-    numOneSign.innerText = `First Number: ${num1}`;
+    num1 = total;
+    numOneSign.innerText = `First Number: ${total}`;
     num2 = '';
     numTwoSign.innerText = `Second Number: ${num2}`;
     operator = '';
@@ -181,3 +181,68 @@ backspaceButton.addEventListener("click", () =>{
         console.log("nothing to backspace!");
     }
 })
+
+const digits = '1234567890';
+const operatorCharacter = '*/+-';
+//Keyboard Support
+window.onkeydown = ((e) => {
+    if(!operator && digits.includes(e.key)) {
+        num1+=e.key;
+        numOneSign.innerText = `First Number: ${num1}`;
+        calculatorDisplay.innerText = numOneSign.innerText;
+
+    } else if (operator && digits.includes(e.key)) {
+        num2+=e.key;
+        numTwoSign.innerText = `Second Number: ${num2}`;
+        calculatorDisplay.innerText = numTwoSign.innerText;
+    } 
+        else if (!num1 && operatorCharacter.includes(e.key)){
+            return
+        }
+        else if (num2 && operatorCharacter.includes(e.key)) {
+            total = operate(num1, operator, num2)
+            totalSign.innerText = `Total: ${total}`
+            operatorDisplay.innerText = operatorSign.innerText;
+            calculatorDisplay.innerText = totalSign.innerText;
+            num1 = total;
+            numOneSign.innerText = `First Number: ${num1}`;
+            num2 = '';
+            numTwoSign.innerText = `Second Number: ${num2}`;
+        }
+    else if (num1 && operatorCharacter.includes(e.key)) {
+        operator = e.key;
+        operatorSign.innerText = `Operator: ${operator}`;
+        operatorDisplay.innerText = operatorSign.innerText;
+    }
+    else if ((!num1||!num2) && (e.key == '=' || e.key ==='Enter')) {
+        return 
+    } 
+    else if (e.key === '=' || e.key === 'Enter'){
+        total = operate(num1, operator, num2);
+        totalSign.innerText = `Total: ${total}`
+        calculatorDisplay.innerText = totalSign.innerText;
+        num1 = total;
+        numOneSign.innerText = `First Number: ${total}`;
+        num2 = '';
+        numTwoSign.innerText = `Second Number: ${num2}`;
+        operator = '';
+        operatorSign.innerText = `Operator: ${operator}`;
+    }
+    else if (e.key === 'Escape') {
+    num1 = '';
+    numOneSign.innerText = `First Number: ${num1}`;
+    num2 = '';
+    numTwoSign.innerText = `Second Number: ${num2}`;
+    operator = '';
+    operatorSign.innerText = `Operator: ${operator}`;
+    total = ``;
+    totalSign.innerText = `Total: ${operator}`;
+    calculatorDisplay.innerText = `0`;
+    operatorDisplay.innerText = '\u00A0';
+    }
+})
+
+// window.onkeydown = ((e) => {
+
+// })
+
