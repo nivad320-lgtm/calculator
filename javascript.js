@@ -64,7 +64,13 @@ function inputDigit(i) {
             num1+=i;
             numOneSign.innerText = `First Number: ${num1}`;
             calculatorDisplay.innerText = numOneSign.innerText;
-
+        }
+        else if(!operator && finishedCalculation) {
+            num1 = '';
+            num1+= i;
+            finishedCalculation = false;
+            numOneSign.innerText = `First Number: ${num1}`;
+            calculatorDisplay.innerText = numOneSign.innerText;
         } else if (operator) {
             num2+=i;
             numTwoSign.innerText = `Second Number: ${num2}`;
@@ -221,7 +227,14 @@ window.onkeydown = ((e) => {
         numOneSign.innerText = `First Number: ${num1}`;
         calculatorDisplay.innerText = numOneSign.innerText;
 
-    } else if (operator && digits.includes(e.key)) {
+    }else if(!operator && finishedCalculation) {
+            num1 = '';
+            num1+= e.key;
+            finishedCalculation = false;
+            numOneSign.innerText = `First Number: ${num1}`;
+            calculatorDisplay.innerText = numOneSign.innerText;
+        }
+         else if (operator && digits.includes(e.key)) {
         num2+=e.key;
         numTwoSign.innerText = `Second Number: ${num2}`;
         calculatorDisplay.innerText = numTwoSign.innerText;
@@ -248,44 +261,15 @@ window.onkeydown = ((e) => {
         return 
     } 
     else if (e.key === '=' || e.key === 'Enter'){
-        total = operate(num1, operator, num2);
-        totalSign.innerText = `Total: ${total}`
-        calculatorDisplay.innerText = totalSign.innerText;
-        num1 = total;
-        numOneSign.innerText = `First Number: ${total}`;
-        num2 = '';
-        numTwoSign.innerText = `Second Number: ${num2}`;
-        operator = '';
-        operatorSign.innerText = `Operator: ${operator}`;
-        finishedCalculation = true;
+        inputEqual();
     }
     else if (e.key === 'Escape') {
-    num1 = '';
-    numOneSign.innerText = `First Number: ${num1}`;
-    num2 = '';
-    numTwoSign.innerText = `Second Number: ${num2}`;
-    operator = '';
-    operatorSign.innerText = `Operator: ${operator}`;
-    total = ``;
-    totalSign.innerText = `Total: ${operator}`;
-    calculatorDisplay.innerText = `0`;
-    operatorDisplay.innerText = '\u00A0';
-    finishedCalculation = false;
+        inputClear()
     }
     else if (e.key === 'Backspace') {
 
     if(num1 && !operator) {
-        console.log("backspace num1");
-        num1 = num1.slice(0,num1.length-1);
-        numOneSign.innerText = `First Number: ${num1}`;
-        calculatorDisplay.innerText = numOneSign.innerText
-    } else if (operator && num2) {
-        console.log("backspace num2");
-        num2 = num2.slice(0,num2.length-1);
-        numTwoSign.innerText = `Second Number: ${num2}`;
-        calculatorDisplay.innerText = numTwoSign.innerText
-    } else {
-        console.log("nothing to backspace!");
+        inputBackspace();
     }
 
 }
