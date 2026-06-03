@@ -240,9 +240,22 @@ window.onkeydown = ((e) => {
     calculatorDisplay.innerText = `0`;
     operatorDisplay.innerText = '\u00A0';
     }
+    else if (e.key === 'Backspace') {
+
+    if(num1 && !operator) {
+        console.log("backspace num1");
+        num1 = num1.slice(0,num1.length-1);
+        numOneSign.innerText = `First Number: ${num1}`;
+        calculatorDisplay.innerText = numOneSign.innerText
+    } else if (operator && num2) {
+        console.log("backspace num2");
+        num2 = num2.slice(0,num2.length-1);
+        numTwoSign.innerText = `Second Number: ${num2}`;
+        calculatorDisplay.innerText = numTwoSign.innerText
+    } else {
+        console.log("nothing to backspace!");
+    }
+
+}
 })
-
-// window.onkeydown = ((e) => {
-
-// })
 
