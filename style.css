@@ -2,6 +2,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 ol, ul {
@@ -9,3 +10,30 @@ ol, ul {
 }
 
 /* Code Starts Here */
+.display {
+    align-self: flex-end;
+}
+.buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.border {
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    width: 760px;
+    padding: 36px 140px 36px;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(139deg,rgba(224, 224, 224, 1) 0%, rgba(252, 255, 224, 1) 54%, rgba(255, 255, 255, 1) 100%);;
+}
+
+button {
+    padding: 16px;
+    border: 1px solid white;
+    background: linear-gradient(139deg,rgba(224, 224, 224, 1) 0%, rgba(252, 255, 224, 1) 54%, rgba(255, 255, 255, 1) 100%);
+    font-family: Helvetica, Arial, sans-serif;
+    color: #454138;
+}
