@@ -93,7 +93,7 @@ decimalButton.addEventListener("click", () => {
             calculatorDisplay.innerText = numOneSign.innerText;
 
         } else if (operator) {
-            if (num1.includes('.')) {
+            if (num2.includes('.')) {
                 return
             }
             num2+='.';
@@ -113,6 +113,9 @@ const operatorButtonArray = [...operatorButtonNodeList]
 // Changes the value of the operator
 for (const operatorButton of operatorButtonArray) {
     operatorButton.addEventListener("click", (event) => {
+        if (!num1){
+            return
+        }
         if (num2) {
             total = operate(num1, operator, num2)
             totalSign.innerText = `Total: ${total}`
@@ -159,4 +162,22 @@ clearButton.addEventListener("click", () => {
     total = ``;
     totalSign.innerText = `Total: ${operator}`;
     calculatorDisplay.innerText = `0`;
+})
+
+//Backspace Button
+const backspaceButton = document.querySelector('.backspace');
+backspaceButton.addEventListener("click", () =>{
+    if(num1 && !operator) {
+        console.log("backspace num1");
+        num1 = num1.slice(0,num1.length-1);
+        numOneSign.innerText = `First Number: ${num1}`;
+        calculatorDisplay.innerText = numOneSign.innerText
+    } else if (operator && num2) {
+        console.log("backspace num2");
+        num2 = num2.slice(0,num2.length-1);
+        numTwoSign.innerText = `Second Number: ${num2}`;
+        calculatorDisplay.innerText = numTwoSign.innerText
+    } else {
+        console.log("nothing to backspace!");
+    }
 })
